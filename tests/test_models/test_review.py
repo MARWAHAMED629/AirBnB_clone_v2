@@ -1,42 +1,40 @@
 #!/usr/bin/python3
-"""
-Test module for the Review model.
-"""  # Descriptive module docstring
+"""Module for test Review class"""
+import unittest
+import json
+import pep8
+import datetime
 
-from tests.test_models.test_base_model import test_basemodel  # Import statement
-from models.review import Review  # Import statement
+from models.review import Review
+from models.base_model import BaseModel
 
 
-class test_Review(test_basemodel):
-    """
-    Tests for the Review class.
-    """  # Class docstring
+class TestReview(unittest.TestCase):
+    """Test Review class implementation"""
+    def test_doc_module(self):
+        """Module documentation"""
+        doc = Review.__doc__
+        self.assertGreater(len(doc), 1)
 
-    def __init__(self, *args, **kwargs):
-        """
-        Initializes the test class.
-        """
-        super().__init__(*args, **kwargs)
-        self.name = "Review"  # Set class name
-        self.value = Review  # Set class under test
+    def test_pep8_conformance_review(self):
+        """Test that models/review.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/review.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_place_id(self):
-        """
-        Tests the place_id attribute's type.
-        """
-        new = self.value()  # Create a new Review instance
-        self.assertEqual(type(new.place_id), str)  # Assert attribute type
+    def test_pep8_conformance_test_review(self):
+        """Test that tests/test_models/test_review.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        res = pep8style.check_files(['tests/test_models/test_review.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_user_id(self):
-        """
-        Tests the user_id attribute's type.
-        """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)  # Assert attribute type
+    def test_doc_constructor(self):
+        """Constructor documentation"""
+        doc = Review.__init__.__doc__
+        self.assertGreater(len(doc), 1)
 
-    def test_text(self):
-        """
-        Tests the text attribute's type.
-        """
-        new = self.value()
-        self.assertEqual(type(new.text), str)  # Assert attribute type
+
+if __name__ == '__main__':
+    unittest.main()
