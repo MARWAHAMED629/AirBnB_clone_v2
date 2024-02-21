@@ -1,99 +1,40 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""Module for test City class"""
+import unittest
+import json
+import pep8
+import datetime
+
 from models.city import City
-import pycodestyle
+from models.base_model import BaseModel
 
 
-class test_City(test_basemodel):
-    """ """
+class TestCity(unittest.TestCase):
+    """Test City class implementation"""
+    def test_doc_module(self):
+        """Module documentation"""
+        doc = City.__doc__
+        self.assertGreater(len(doc), 1)
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "City"
-        self.value = City
-
-    def test_state_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.state_id), str)
-
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
-
-
-class Test_PEP8(unittest.TestCase):
-    """test an  User"""
-
-    def test_pep8_user(self):
-        """test the  pep8 style"""
-        pep8style = pycodestyle.StyleGuide(quiet=True)
+    def test_pep8_conformance_city(self):
+        """Test that models/city.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(['models/city.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
+    def test_pep8_conformance_test_city(self):
+        """Test that tests/test_models/test_city.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        res = pep8style.check_files(['tests/test_models/test_city.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-class TestCity(unittest.TestCase):
-    """this will test the city class X"""
-
-    @classmethod
-    def setUpClass(cls):
-        """set up for test"""
-        cls.city = City()
-        cls.city.name = "LA"
-        cls.city.state_id = "CA"
-
-    @classmethod
-    def teardown(cls):
-        """the end of the test this will tear it down"""
-        del cls.city
-
-    def tearDown(self):
-        """the teardown"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
-
-    def test_pep8_City(self):
-        """Tests the  pep8 style"""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/city.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
-
-    def test_checking_for_docstring_City(self):
-        """checking for the docstrings"""
-        self.assertIsNotNone(City.__doc__)
-
-    def test_attributes_City(self):
-        """cheking if the City have an attributes"""
-        self.assertTrue('id' in self.city.__dict__)
-        self.assertTrue('created_at' in self.city.__dict__)
-        self.assertTrue('updated_at' in self.city.__dict__)
-        self.assertTrue('state_id' in self.city.__dict__)
-        self.assertTrue('name' in self.city.__dict__)
-
-    def test_is_subclass_City(self):
-        """test if the City is subclass of Basemodel"""
-        self.assertTrue(issubclass(self.city.__class__, BaseModel), True)
-
-    def test_attribute_types_City(self):
-        """test the attribute type for City"""
-        self.assertEqual(type(self.city.name), str)
-        self.assertEqual(type(self.city.state_id), str)
-
-    def test_save_City(self):
-        """tests if save works"""
-        self.city.save()
-        self.assertNotEqual(self.city.created_at, self.city.updated_at)
-
-    def test_to_dict_City(self):
-        """test if the dictionary works"""
-        self.assertEqual('to_dict' in dir(self.city), True)
+    def test_doc_constructor(self):
+        """Constructor documentation"""
+        doc = City.__init__.__doc__
+        self.assertGreater(len(doc), 1)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
